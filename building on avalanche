@@ -1,0 +1,75 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.25;
+
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+
+contract Module4 is ERC20 {
+    
+    address public OwnerAddress;
+
+    struct Sword {
+        string name;
+        uint256 stock;
+        uint256 price;
+    }
+
+    Sword[] swords;
+
+    constructor() ERC20("Degen", "DGN") payable {
+        OwnerAddress = msg.sender;
+        swords.push(Sword("Underworld Swords", 500, 350));
+        swords.push(Sword("Darkness Swords", 2000, 200));
+        swords.push(Sword("Flaming Swords", 5000, 100));
+    }
+
+    mapping(address => mapping(string => uint256)) public ItemsTransactions;
+
+    function Redeem(address Wallet, string memory SwordType, uint256 Amount) public payable {
+        bool itemFound = false;
+
+        for (uint256 i = 0; i < swords.length; i++) {
+            if (keccak256(abi.encodePacked(swords[i].name)) == keccak256(abi.encodePacked(SwordType))) {
+                uint256 total = swords[i].price * Amount;
+
+                require(balanceOf(Wallet) >= total, "insufficientDegen");
+                require(Amount != 0, "0 value is not acceptable!");
+                require(swords[i].stock >= Amount, "The Swords is 0 stock");
+
+                _burn(Wallet, total);
+                swords[i].stock -= Amount;
+                ItemsTransactions[Wallet][SwordType] += Amount;
+
+                itemFound = true;
+                break;
+            }
+        }
+
+        if (!itemFound) {
+            revert("Item not found!");
+        }
+    }
+
+    function ESwordsShop() public view returns (Sword[] memory) {
+        return swords;
+    }
+
+     modifier onlySender(address Wallet) {
+        require(Wallet == msg.sender, "The address you input is not the same as Owner Address");
+        _;
+    }
+
+    function Mint(address newaddress, uint256 amount) public onlySender(newaddress){
+        _mint(newaddress, amount);
+    }
+
+    function Burn(address newaddress, uint256 amount) public {
+    require(balanceOf(newaddress) >= amount, "Degen is not enough!");
+        _burn(newaddress, amount);
+    }
+
+    function Transfers(address from, address to, uint256 amount) public {
+        require(balanceOf(from) >= amount, "Degen is not enough!");
+        _transfer(from, to, amount);
+    }
+
+}
