@@ -1,8 +1,53 @@
-# Building on Avalanche
-learning and developing blockchain-based applications specifically on the Avalanche blockchain platform.
-# Description
-This Solidity contract, Module4, implements an ERC20 token named "Degen" with the symbol DGN, allowing users to mint, burn, transfer, and redeem tokens for specific items (swords). The contract owner is set during deployment and is the only one authorized to mint new tokens. The contract defines a Sword struct, containing the name, stock, and price of each sword, and initializes three types of swords with different stock and price values. Users can redeem tokens for swords if they have enough balance and if the requested swords are in stock. The contract maintains mappings to track user balances and item transactions. It includes a modifier to ensure certain functions are only executed by the address matching msg.sender, ensuring security and proper access control. The ESwordsShop function allows anyone to view the available swords, and the contract leverages OpenZeppelin's ERC20 implementation for standard token functionality.
-# Executing Program
-so to run the code you can use this link https://remix.ethereum.org/ a solidty compiler.
-# Author
-Marielle R.
+# Module4 Smart Contract
+
+This Solidity smart contract, named Module4, is an ERC20 token with additional functionalities for managing a collection of swords and allowing users to redeem these swords by burning the token.
+
+## Overview
+
+The contract inherits from ERC20 and includes the following features:
+
+- **ERC20 Token**: Standard ERC20 functionality for token management.
+- **Swords Collection**: A collection of swords with details such as name, stock, and price.
+- **Redeem Functionality**: Users can redeem swords by burning the token corresponding to the sword's price.
+- **Minting**: Only the contract owner can mint new tokens to designated addresses.
+- **Burning**: Users can burn their tokens.
+- **Transfers**: Allows token transfers between addresses.
+
+## Functionality
+
+### Constructor
+
+Upon deployment (`constructor`), the contract initializes with a predefined token name ("Degen") and symbol ("DGN"), and sets up an initial collection of swords.
+
+### Sword Struct
+
+The `Sword` struct defines attributes for each sword including `name`, `stock`, and `price`.
+
+### Redeem Function
+
+The `Redeem` function allows users to redeem a specific type of sword by burning the corresponding amount of tokens. It checks if the requested sword type exists, if the user has sufficient tokens, and if there is enough stock available.
+
+### Additional Functions
+
+- **ESwordsShop**: Returns an array of all available swords.
+- **Mint**: Allows the contract owner to mint new tokens to a specified address.
+- **Burn**: Allows any user to burn their own tokens.
+- **Transfers**: Allows token transfers between addresses.
+
+### Modifiers
+
+- **onlySender**: Restricts access to functions based on the caller's address, ensuring only the contract owner can execute certain operations.
+
+## Usage
+
+1. **Deploying the Contract**: Deploy the contract on a supported Ethereum environment using Remix or another IDE.
+2. **Interacting with the Contract**: Use the provided functions (`Redeem`, `Mint`, `Burn`, `Transfers`) to manage tokens and swords.
+
+## Development Environment
+
+This contract was developed and tested using Remix IDE (remix.ethereum.org).
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for more details.
+
