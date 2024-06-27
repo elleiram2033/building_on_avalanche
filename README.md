@@ -1,5 +1,4 @@
-# Module4 Smart Contract
-
+# Module4 Building On Avalanche
 This Solidity smart contract, named Module4, is an ERC20 token with additional functionalities for managing a collection of swords and allowing users to redeem these swords by burning the token.
 
 ## Overview
