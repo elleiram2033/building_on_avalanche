@@ -46,6 +46,10 @@ The `Redeem` function allows users to redeem a specific type of sword by burning
 
 This contract was developed and tested using Remix IDE (remix.ethereum.org).
 
+## Author
+
+Marielle Romana
+
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for more details.
